@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>Пользователи</h1>
-<div th:if="${tableExists}">
+<div th:if="${not #lists.isEmpty(users)}">
     <table border="1">
         <thead>
         <tr>
@@ -35,22 +35,10 @@
         </tbody>
     </table>
 </div>
-<div th:unless="${tableExists}">
-    <p>Таблица пользователей не существует.</p>
-    <form th:method="POST" th:action="@{/users/createTable}">
-        <button type="submit">Создать таблицу</button>
-    </form>
+<div th:unless="${not #lists.isEmpty(users)}">
+    <p>Список пользователей пуст.  Добавьте пользователей!</p>
 </div>
 <br>
-<a th:href="@{/users/new}" th:if="${tableExists}">Создать нового пользователя</a>
-<br>
-<br>
-<form th:method="POST" th:action="@{/users/dropTable}" th:if="${tableExists}">
-    <button type="submit">Удалить таблицу</button>
-</form>
-<br>
-<form th:method="POST" th:action="@{/users/cleanTable}" th:if="${tableExists}">
-    <button type="submit">Очистить таблицу</button>
-</form>
+<a th:href="@{/users/new}">Создать нового пользователя</a>
 </body>
 </html>

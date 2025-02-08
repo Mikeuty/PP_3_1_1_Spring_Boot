@@ -24,13 +24,8 @@ public class UserController {
 
     @GetMapping()
     public String getAllUsers(Model model) {
-        try {
-            List<User> users = userService.getAllUsers();
-            model.addAttribute("users", users);
-            model.addAttribute("tableExists", true);
-        } catch (Exception e) {
-            model.addAttribute("tableExists", false);
-        }
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
         return "list";
     }
 
@@ -68,24 +63,6 @@ public class UserController {
     @DeleteMapping("/delete")
     public String deleteUser(@RequestParam("id") long id) {
         userService.removeUserById(id);
-        return "redirect:/users";
-    }
-
-    @PostMapping("/createTable")
-    public String createTable() {
-        userService.createUsersTable();
-        return "redirect:/users";
-    }
-
-    @PostMapping("/dropTable")
-    public String dropTable() {
-        userService.dropUsersTable();
-        return "redirect:/users";
-    }
-
-    @PostMapping("/cleanTable")
-    public String cleanTable() {
-        userService.cleanUsersTable();
         return "redirect:/users";
     }
 }

@@ -14,12 +14,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final JdbcTemplate jdbcTemplate;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository, DataSource dataSource) {
         this.userRepository = userRepository;
-        this.jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
     @Override
@@ -42,25 +40,4 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    //Вроде как можно с помощью миграции это сделать, но я пока не умею.
-    //Поэтому jdbcTemplate из курса Алишева.
-    @Override
-    public void createUsersTable() {
-        jdbcTemplate.execute("CREATE TABLE IF NOT EXISTS users (\n" +
-                "  id BIGINT AUTO_INCREMENT PRIMARY KEY,\n" +
-                "  name VARCHAR(50) NOT NULL,\n" +
-                "  last_name VARCHAR(50) NOT NULL,\n" +
-                "  age TINYINT UNSIGNED NOT NULL\n" +
-                ");");
-    }
-
-    @Override
-    public void dropUsersTable() {
-        jdbcTemplate.execute("DROP TABLE IF EXISTS users");
-    }
-
-    @Override
-    public void cleanUsersTable() {
-        jdbcTemplate.execute("DELETE FROM users");
-    }
 }
